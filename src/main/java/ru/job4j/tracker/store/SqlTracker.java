@@ -48,7 +48,7 @@ public class SqlTracker implements Store {
         try (PreparedStatement preparedStatement = cn.prepareStatement(
                 "insert into items (name, created) values (?, ?);", Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, item.getName());
-            preparedStatement.setTimestamp(2, Timestamp.valueOf(item.getLocalDateTime()));
+            preparedStatement.setTimestamp(2, Timestamp.valueOf(item.getCreated()));
             preparedStatement.execute();
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -67,7 +67,7 @@ public class SqlTracker implements Store {
         try (PreparedStatement preparedStatement = cn.prepareStatement(
                 "update items set name = ?, created = ? where id = ?;")) {
             preparedStatement.setString(1, item.getName());
-            preparedStatement.setTimestamp(2, Timestamp.valueOf(item.getLocalDateTime()));
+            preparedStatement.setTimestamp(2, Timestamp.valueOf(item.getCreated()));
             preparedStatement.setInt(3, id);
             replaced = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
