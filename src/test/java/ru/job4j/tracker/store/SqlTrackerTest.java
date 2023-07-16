@@ -77,7 +77,7 @@ public class SqlTrackerTest {
     @Test
     void whenAddAndFindAllThenMustBeSame() {
         SqlTracker tracker = new SqlTracker(connection);
-        Item item1 = tracker.add(new Item("item 1"));
+        Item item1 = tracker.add(new Item("new random item"));
         List<Item> expected = List.of(item1);
         assertThat(tracker.findAll()).isEqualTo(expected);
     }
