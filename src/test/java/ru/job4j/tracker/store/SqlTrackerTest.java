@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Properties;
 
@@ -78,15 +79,19 @@ public class SqlTrackerTest {
     void whenAddAndFindAllThenMustBeSame() {
         SqlTracker tracker = new SqlTracker(connection);
         Item item1 = tracker.add(new Item("new random item"));
+        LocalDateTime time = LocalDateTime.now();
+        item1.setCreated(time);
         List<Item> expected = List.of(item1);
-        assertThat(tracker.findAll()).isEqualTo(expected);
+        assertThat(expected).isEqualTo(tracker.findAll());
     }
 
-    /* @Test
+    @Test
     void whenAddAndFindByNameThenMustBeSame() {
         SqlTracker tracker = new SqlTracker(connection);
         Item item1 = tracker.add(new Item("item1"));
+        LocalDateTime time = LocalDateTime.now();
+        item1.setCreated(time);
         List<Item> expected = List.of(item1);
-        assertThat(tracker.findByName("item1")).isEqualTo(expected);
-    }*/
+        assertThat(expected).isEqualTo(tracker.findByName("item1"));
+    }
 }
